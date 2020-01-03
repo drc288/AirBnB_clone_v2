@@ -40,15 +40,17 @@ def do_deploy(archive_path):
         # Create the new directory
         run("mkdir -p /data/web_static/releases/{}/".format(new_dict))
         # Umcompress the file in /data/web_static/releases/ and remove
-        run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/".format(file_tar, new_dict))
+        run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/"
+            .format(file_tar, new_dict))
         run("rm /tmp/{}".format(file_tar))
-        print(new_dict)
         run("mv /data/web_static/releases/{}/web_static/*\
-                    /data/web_static/releases/{}/"
-    .format(new_dict, new_dict))
+                    /data/web_static/releases/{}/".format(new_dict, new_dict))
+        # Remove web static
+        run("rm -rf /data/web_static/releases/{}/web_static".format(new_dict))
         # Remove the symlink and create the new symblink
         run("rm -rf /data/web_static/current")
-        run("ln -s /data/web_static/releases/{}/ /data/web_static/current".format(new_dict))
-        print("deploy")
+        run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
+            .format(new_dict))
+        print("New version deployed!")
     except Exception:
         return False
