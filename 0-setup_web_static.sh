@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
 # This script configure the web static in the server, using nginx
 # ###############################################################
-# #                     Deply Web Static                        #
+# #                    Deploy Web Static                        #
 # ###############################################################
 #
 # First install nginx if not exists and update the sistem
 sudo apt-get update -y
 sudo apt-get install nginx -y
 # Create the folder if not exists
-# Dir 1
 if [ ! -d /data/web_static/releases/test/ ]; then
     sudo mkdir -p /data/web_static/releases/test/;
 fi;
-# Dir 2
 if [ ! -d /data/web_static/shared/ ]; then
-    sudo mkdir -p /data/web_statci/shared/;
+    sudo mkdir -p /data/web_static/shared/;
 fi;
 # Create the file with the basic html
 sudo touch /data/web_static/releases/test/index.html
