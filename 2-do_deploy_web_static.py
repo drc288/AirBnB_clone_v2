@@ -2,6 +2,7 @@
 from fabric.api import put, run, local, env
 from shlex import split
 from datetime import datetime
+from os import path
 
 env.hosts = ["34.73.4.188", "35.237.83.22"]
 
@@ -26,7 +27,7 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    if not archive_path:
+    if not path.exists(archive_path):
         return False
 
     # Create the name dict for backup
@@ -36,7 +37,7 @@ def do_deploy(archive_path):
 
     try:
         # Upload .targz in the machine
-        put(archive_path, "/tmp/")
+        put(archive_path, "/tmp/{}".format(file_tar))
         # Create the new directory
         run("mkdir -p /data/web_static/releases/{}/".format(new_dict))
         # Umcompress the file in /data/web_static/releases/ and remove
