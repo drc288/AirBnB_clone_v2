@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 from fabric.api import put, run, local, env
-from shlex import split
 from datetime import datetime
 from os import path
 
@@ -31,9 +30,8 @@ def do_deploy(archive_path):
         return False
 
     # Create the name dict for backup
-    my_split = archive_path.split("/")
-    file_tar = my_split[1]
-    new_dict = my_split[1][:-4]
+    file_tar = archive_path[9:]
+    new_dict = archive_path[9:-4]
 
     try:
         # Upload .targz in the machine
@@ -45,7 +43,7 @@ def do_deploy(archive_path):
             .format(file_tar, new_dict))
         run("rm /tmp/{}".format(file_tar))
         run("mv /data/web_static/releases/{}/web_static/*\
-                    /data/web_static/releases/{}/".format(new_dict, new_dict))
+            /data/web_static/releases/{}/".format(new_dict, new_dict))
         # Remove web static
         run("rm -rf /data/web_static/releases/{}/web_static".format(new_dict))
         # Remove the symlink and create the new symblink
