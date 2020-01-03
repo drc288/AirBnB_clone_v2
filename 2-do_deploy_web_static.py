@@ -32,17 +32,23 @@ def do_deploy(archive_path):
     # Create the name dict for backup
     my_split = archive_path.split("/")
     file_tar = my_split[1]
-    new_dict = my_split[1][:-4])
+    new_dict = my_split[1][:-4]
 
-    # Upload .targz in the machine
-    put(archive_path, "/tmp/")
-    # Create the new directory
-    run("mkdir -p /data/web_static/releases/{}/".format(new_dict))
-    # Umcompress the file in /data/web_static/releases/ and remove
-    run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/".format(file_tar, new_dict))
-    run("rm /tmp/{}".format(file_tar))
-    run("mv /data/web_static/releases/{}/web_static/*
-        /data/web_static/releases/{}/".format(new_dict, new_dict))
-    # Remove the symlink and create the new symblink
-    run("rm -rf /data/web_static/current")
-    run("ln -s /data/web_static/releases/{}/ /data/web_static/current".format(new_dict))
+    try:
+        # Upload .targz in the machine
+        put(archive_path, "/tmp/")
+        # Create the new directory
+        run("mkdir -p /data/web_static/releases/{}/".format(new_dict))
+        # Umcompress the file in /data/web_static/releases/ and remove
+        run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/".format(file_tar, new_dict))
+        run("rm /tmp/{}".format(file_tar))
+        print(new_dict)
+        run("mv /data/web_static/releases/{}/web_static/*\
+                    /data/web_static/releases/{}/"
+    .format(new_dict, new_dict))
+        # Remove the symlink and create the new symblink
+        run("rm -rf /data/web_static/current")
+        run("ln -s /data/web_static/releases/{}/ /data/web_static/current".format(new_dict))
+        print("deploy")
+    except Exception:
+        return False
