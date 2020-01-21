@@ -15,7 +15,6 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 import sqlalchemy as db
 
 
-
 class DBStorage:
     """DBStorage class"""
     __engine = None
@@ -23,12 +22,11 @@ class DBStorage:
 
     def __init__(self):
         # mysql is the dialect and mysqldb is the driver
-        self.__engine = db.create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(getenv('HBNB_MYSQL_USER'),
-                                              getenv('HBNB_MYSQL_PWD'),
-                                              getenv('HBNB_MYSQL_HOST'),
-                                              getenv('HBNB_MYSQL_DB')),
-                                         pool_pre_ping=True)
+        self.__engine = db.create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+                                getenv('HBNB_MYSQL_USER'),
+                                getenv('HBNB_MYSQL_PWD'),
+                                getenv('HBNB_MYSQL_HOST'),
+                                getenv('HBNB_MYSQL_DB')), pool_pre_ping=True)
         if getenv('HBNB_MYSQL_ENV') == "test":
             Base.metadata.drop_all(self.__engine)
 
@@ -58,8 +56,7 @@ class DBStorage:
         self.__session.commit()
 
     def delete(self, obj=None):
-        """
-         delete obj from the current database
+        """delete obj from the current database
         """
         if obj:
             self.__session.delete(obj)
@@ -69,4 +66,8 @@ class DBStorage:
         session = sessionmaker(bind=self.__engine,
                                expire_on_commit=False)
         self.__session = scoped_session(session)
-        
+
+    def close(self):
+        """remove a session
+        """
+        self.__session.remove()
