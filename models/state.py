@@ -15,7 +15,7 @@ class State(BaseModel, Base):
     """
 
     __tablename__ = 'states'
-    if getenv('HBNB_TYPE_STORAGE') == "db":
+    if os.getenv('HBNB_TYPE_STORAGE') == "db":
         name = Column(String(128), nullable=False)
         cities = relationship("City",
                               cascade="all, delete",
@@ -23,7 +23,7 @@ class State(BaseModel, Base):
     else:
         name = ""
 
-    if getenv('HBNB_TYPE_STORAGE') != "db":
+    if os.getenv('HBNB_TYPE_STORAGE') != "db":
         @property
         def cities(self):
             new_list = []
