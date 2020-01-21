@@ -2,6 +2,7 @@
 from flask import Flask, render_template
 app = Flask(__name__)
 
+
 @app.route('/', strict_slashes=False)
 def home():
     """ return the Hello HBNB!
@@ -48,4 +49,5 @@ def num_template(n):
             )
 
 
-app.run(host='0.0.0.0')
+if __name__ == "__main__":
+    app.run()
