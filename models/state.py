@@ -20,7 +20,10 @@ class State(BaseModel, Base):
         cities = relationship("City",
                               cascade="all, delete",
                               wackref="my_state")
-    elif storage_type != "db":
+    else:
+        name = ""
+
+    if storage_type != "db":
         @property
         def cities(self):
             new_list = []
@@ -29,5 +32,3 @@ class State(BaseModel, Base):
                 if my_cities.state_id == self.id:
                     new_list.append(my_cities)
             return new_list
-    else:
-        name = ""
