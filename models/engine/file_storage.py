@@ -32,7 +32,7 @@ class FileStorage:
             new_dict = {}
             for key, value in self.__objects.items():
                 if cls.__name__ in key:
-                    new_dict[keys] = value
+                    new_dict[key] = value
             return new_dict
 
     def new(self, obj):
