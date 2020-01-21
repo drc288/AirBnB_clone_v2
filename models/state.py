@@ -4,7 +4,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from models.city import City
-import os
+from os import getenv
 import models
 
 
@@ -15,15 +15,15 @@ class State(BaseModel, Base):
     """
 
     __tablename__ = 'states'
-    if os.getenv('HBNB_TYPE_STORAGE') == "db":
+    if getenv('HBNB_TYPE_STORAGE') == "db":
         name = Column(String(128), nullable=False)
         cities = relationship("City",
                               cascade="all, delete",
-                              wackref="my_state")
+                              backref="my_state")
     else:
         name = ""
 
-    if os.getenv('HBNB_TYPE_STORAGE') != "db":
+    if getenv('HBNB_TYPE_STORAGE') != "db":
         @property
         def cities(self):
             new_list = []
