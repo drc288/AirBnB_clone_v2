@@ -13,7 +13,6 @@ class State(BaseModel, Base):
     Attributes:
         name: input name
     """
-
     __tablename__ = 'states'
     if getenv('HBNB_TYPE_STORAGE') == "db":
         name = Column(String(128), nullable=False)
@@ -29,6 +28,6 @@ class State(BaseModel, Base):
             new_list = []
             my_cities = models.storage.all(City)
             for key, value in my_cities.items():
-                if my_cities.state_id == self.id:
+                if value.state_id == self.id:
                     new_list.append(my_cities)
             return new_list
