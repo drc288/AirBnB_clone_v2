@@ -26,15 +26,6 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
-        #if cls:
-        #    print("######################")
-        #    show_obj = cls.__name__
-        #    for key in self.__objects:
-        #        # Split the name and the id
-        #        cls_name = key.split(".")
-        #        if cls_name[0] is show_obj:
-        #            print(self.__objects[key])
-        #            # return self.__object[key]
         return self.__objects
 
     def new(self, obj):
@@ -66,7 +57,7 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
-    def delete(self, obj = None):
+    def delete(self, obj=None):
         """public instance method to delete an object from __objects
         """
         if obj:
@@ -74,3 +65,8 @@ class FileStorage:
             if self.__objects[to_delete]:
                 del self.__objects[to_delete]
                 self.save()
+
+    def close(self):
+        """public method for deserializing JSON
+        """
+        FileStorage.reload()
