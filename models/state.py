@@ -15,6 +15,19 @@ class State(BaseModel, Base):
     """
 
     __tablename__ = 'states'
-    name = Column(String(128), nullable=False)
-    cities = relationship("City", cascade="all, delete", backref="my_state")
-
+    if storage_type == "db":
+        name = Column(String(128), nullable=False)
+        cities = relationship("City",
+                              cascade="all, delete",
+                              wackref="my_state")
+    elif storage_type != "db":
+        @property
+        def cities(self):
+            new_list = []
+            my_cities = models.storage.all(City)
+            for key, value in my_cities.items():
+                if my_cities.state_id == self.id:
+                    new_list.append(my_cities)
+            return new_list
+    else:
+        name = ""
