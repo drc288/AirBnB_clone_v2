@@ -14,4 +14,4 @@ def do_pack():
                                                 time.second)
 
     local("mkdir -p versions")
-    local("tar cavf versions/{} {}".format(version_file, folder))
+    local("tar -zcvf versions/{} {}".format(version_file, folder))
