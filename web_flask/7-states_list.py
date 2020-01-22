@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def close_sess(lmaoo):
+def close_sess(close):
     storage.close()
 
 
@@ -58,6 +58,8 @@ def num_template(n):
 
 @app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
 def odd_or_even(n):
+    """Verifi if the number are even or odd
+    """
     if n % 2 == 0:
         odev = "even"
     else:
@@ -71,8 +73,13 @@ def odd_or_even(n):
 
 @app.route('/states_list', strict_slashes=False)
 def list():
-    obj = storage.all(State)
-    return "{}".format(obj)
+    """Get the data of database and print
+    """
+    objs_states = storage.all("State").values()
+    return render_template(
+                "7-states_list.html",
+                states=objs_states
+            )
 
 
 if __name__ == "__main__":
