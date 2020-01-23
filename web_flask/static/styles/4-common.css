@@ -1,0 +1,21 @@
+/* Reference to all(*) */
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/* Add referece for all in the body */
+body {
+    color:  #484848;
+    font-size: 14px;
+    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/* 
+    margin, separate the top whit 30px and botton with 30px
+    and set auto with thel left and the right
+*/
+.container {
+    max-width: 1000px;
+    margin: 30px auto 30px auto;
+}
